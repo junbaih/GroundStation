@@ -32,10 +32,10 @@ void MapWidget::addWaypoint(QVector3D point, int wpNum, QColor color, int radius
 }
 
 void MapWidget::addMissionPath(Mission * mission) {
-    QList<QVector3D> * waypoints = mission->mission_waypoints.waypoints;
-    QMetaObject::invokeMethod(map, "addMissionPath", Q_ARG(QVariant, toQVariantList(waypoints)));
-    for (int i = 0; i < waypoints->size(); i++)
-        addWaypoint(waypoints->at(i), i, QColor("#2980b9"), 20);
+    QList<QVector3D> waypoints = mission->get3DPath();
+    QMetaObject::invokeMethod(map, "addMissionPath", Q_ARG(QVariant, toQVariantList(&waypoints)));
+    for (int i = 0; i < waypoints.size(); i++)
+        addWaypoint(waypoints.at(i), i, QColor("#2980b9"), 20);
 }
 
 void MapWidget::changeEditMode(bool editing) {

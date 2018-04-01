@@ -15,6 +15,8 @@ Mission::Mission(QJsonObject obj) {
     mission_waypoints = setMissionWaypoints(obj["mission_waypoints"].toArray());
     search_grid_points = set3DPoints(obj["search_grid_points"].toArray());
     fly_zones = setFlyZones(obj["fly_zones"].toArray());
+    defaultTakeoff();
+    defaultLand();
 }
 
 Mission::Mission(QJsonObject mission_obj, QJsonDocument obstacles_doc) {
@@ -28,6 +30,8 @@ Mission::Mission(QJsonObject mission_obj, QJsonDocument obstacles_doc) {
     search_grid_points = set3DPoints(mission_obj["search_grid_points"].toArray());
     fly_zones = setFlyZones(mission_obj["fly_zones"].toArray());
     obstacles = Obstacles(obstacles_doc);
+    defaultTakeoff();
+    defaultLand();
 }
 
 Mission::Mission(const Mission& mission) {
@@ -59,6 +63,8 @@ Mission::Mission(const Mission& mission) {
     }
     this->fly_zones = fly;
     this->obstacles = mission.obstacles;
+    this->mission_landing = mission.mission_landing;
+    this->mission_takeoff = mission.mission_takeoff;
 }
 
 QList<FlyZone> * Mission::setFlyZones(QJsonArray flyZoneArray) {
@@ -79,18 +85,8 @@ MissionWaypoints Mission::setMissionWaypoints(QJsonArray pointArray) {
     MissionWaypoints missionWaypoints = MissionWaypoints();
     missionWaypoints.waypoints = set3DPoints(pointArray);
     missionWaypoints.actions = new QList<int>();
-    for (int i = 0; i < missionWaypoints.waypoints->size();i++) {
+    for (int i = 0; i < missionWaypoints.waypoints->size();i++)
         missionWaypoints.actions->append(MAV_CMD_NAV_WAYPOINT);
-//        if (i == 0) {
-//            missionWaypoints.actions->append(MAV_CMD_NAV_TAKEOFF);
-//        }
-//        else if (i == missionWaypoints.waypoints->size() -1) {
-//            missionWaypoints.actions->append(MAV_CMD_NAV_LAND);
-//        }
-//        else {
-//            missionWaypoints.actions->append(MAV_CMD_NAV_WAYPOINT);
-//        }
-    }
     return missionWaypoints;
 }
 
@@ -128,7 +124,7 @@ void Mission::loadWaypoint(mavlink_mission_request_t mrequest) {
     if (mrequest.seq == 0) {
         cmd = 22;
     }
-    cmd =22;
+    cmd = 22;
     emit (loadToUAV(mrequest.seq, cmd, params));
 }
 
@@ -136,33 +132,8 @@ QVector<Waypoint::WP> Mission::constructWaypoints() {
     uint16_t len = mission_waypoints.waypoints->length();
     QVector<Waypoint::WP> waypoints;
 
-    // The first waypoint does not matter - thrown from mavlink
-    /* Home Position WP */
-    Waypoint::WP wp;
-    wp.id = 0;
-    wp.command = 16;
-    wp.autocontinue = 1;
-    wp.current = 0;
-    wp.param1 = 0;
-    wp.param2 = 0;
-    wp.param3 = 0;
-    wp.x = 0;
-    wp.y = 0;
-    wp.z = 0;
-    waypoints.append(wp);
-
-    wp.id = 1;
-    wp.command = 22;
-    wp.autocontinue = 1;
-    wp.current = 0;
-    wp.param1 = 45;
-    wp.param2 = 0;
-    wp.param3 = 0;
-    wp.x = this->home_pos.x();
-    wp.y = this->home_pos.y();
-    wp.z = 75;
-    waypoints.append(wp);
-    // Takeoff from home position to 75 altitude
+    waypoints.append(generateHomePositionWP());
+    waypoints.append(generateTakeoffWP());
 
     for (uint16_t i = 2; i <= len + 1; i++) {
         Waypoint::WP wp;
@@ -170,35 +141,24 @@ QVector<Waypoint::WP> Mission::constructWaypoints() {
         wp.command = mission_waypoints.actions->at(i-2);
         wp.autocontinue = 1;
         wp.current = 0;
-        wp.param1 = 0;
-        wp.param2 = 30;
-        wp.param3 = 0;
+        wp.param1 = 0; // Waypoint ignored
+        wp.param2 = 30; // Acceptance radius in meters
+        wp.param3 = 0; // 0 to pass thru waypoint
+        wp.param4 = std::numeric_limits<float>::quiet_NaN();
         wp.x = mission_waypoints.waypoints->at(i-2).x();
         wp.y = mission_waypoints.waypoints->at(i-2).y();
         wp.z = mission_waypoints.waypoints->at(i-2).z();
         waypoints.append(wp);
     }
 
-    qDebug() << "Mission::constructWaypoints set last point as home_pos w/ land";
-    // Return to home position
-    // CHANGE TO LOITER CENTER
-    wp.id = len + 2;
-    wp.command = 17;
-    wp.autocontinue = 1;
-    wp.current = 0;
-    wp.param1 = 0;
-    wp.param2 = 0; // 1 = opportunistic precision landing
-    wp.param3 = 40; // loiter radius
-    wp.x = 33.771945;
-    wp.y = -117.694765;
-    wp.z = 65;
-    waypoints.append(wp);
+    waypoints.append(generateLandingWP(len+1));
 
     return waypoints;
 }
 
 uint16_t Mission::waypointLength() {
-    return mission_waypoints.waypoints->length() + 3;
+    // Home WP + Takeoff + Land = 3
+    return 3 + mission_waypoints.waypoints->length() + mission_landing.landingPath.length();
 }
 
 void Mission::setActions_wp() {
@@ -228,4 +188,105 @@ QList<QPolygonF> Mission::get_obstacles() {
         polys.append(QPolygonF(obstacle_footprint_points));
     }
     return polys;
+}
+
+void Mission::defaultTakeoff() {
+    mission_takeoff.altitude = 75;
+    mission_takeoff.pitch = 45;
+    mission_takeoff.yawAngle = std::numeric_limits<float>::quiet_NaN();
+}
+
+void Mission::defaultLand() {
+    mission_landing.landingPoint = QVector2D(33.771082, -117.695150);
+    mission_landing.abortAlt = 50;
+    mission_landing.precisionLandMode = 0;
+
+    /* Default Landing Path */
+    for (uint16_t i = 0; i < 1; i++) {
+        Waypoint::WP wp;
+        wp.id = i;
+        wp.frame = 0;
+        wp.command = 16;
+        wp.current = 0;
+        wp.autocontinue = 1;
+        wp.param1 = 0;
+        wp.param2 = 30;
+        wp.param3 = 0;
+        wp.param4 = std::numeric_limits<float>::quiet_NaN();;
+        wp.x = 33.770961;
+        wp.y = -117.694577;
+        wp.z = 10;
+        mission_landing.landingPath.append(wp);
+    }
+}
+
+Waypoint::WP Mission::generateHomePositionWP() {
+    Waypoint::WP wp = {0, 0, 16, 0, 1, 0, 0, 0, 0, 0, 0, 0};
+    return wp;
+}
+
+Waypoint::WP Mission::generateTakeoffWP() {
+    Waypoint::WP wp;
+    wp.id = 1;
+    wp.frame = 0;
+    wp.command = 22;
+    wp.current = 0;
+    wp.autocontinue = 1;
+    wp.param1 = mission_takeoff.pitch;
+    wp.param2 = 0; // Empty
+    wp.param3 = 0; // Empty
+    wp.param4 = mission_takeoff.yawAngle;
+    wp.x = home_pos.x();
+    wp.y = home_pos.y();
+    wp.z = mission_takeoff.altitude;
+    return wp;
+}
+
+QVector<Waypoint::WP> Mission::generateLandingWP(int lastid) {
+    lastid++;
+    for (uint16_t i = 0; i < mission_landing.landingPath.length(); i++) {
+        mission_landing.landingPath[i].id = lastid;
+        lastid++;
+    }
+    QVector<Waypoint::WP> landing = mission_landing.landingPath.toVector();
+    Waypoint::WP landing_point;
+    landing_point.id = lastid;
+    landing_point.frame = 0;
+    landing_point.command = 21;
+    landing_point.current = 0;
+    landing_point.autocontinue = 1;
+    landing_point.param1 = mission_landing.abortAlt;
+    landing_point.param2 = mission_landing.precisionLandMode;
+    landing_point.param3 = 0; // Empty
+    landing_point.param4 = 0; // Ignored
+    landing_point.x = mission_landing.landingPoint.x();
+    landing_point.y = mission_landing.landingPoint.y();
+    landing_point.z = 0; // Ignored
+    landing.append(landing_point);
+    return landing;
+}
+
+QList<QVector3D> Mission::get3DPath() {
+    QList<QVector3D> path;
+    path.append(QVector3D(home_pos.x(), home_pos.y(), 0)); // Takeoff
+    path.append(*(mission_waypoints.waypoints)); // Waypoints
+    for (uint16_t i = 0; i < mission_landing.landingPath.length(); i++) {
+        path.append(QVector3D(mission_landing.landingPath.at(i).x,
+                              mission_landing.landingPath.at(i).y,
+                              mission_landing.landingPath.at(i).z)); // Landing Path
+    }
+    path.append(QVector3D(mission_landing.landingPoint.x(),
+                          mission_landing.landingPoint.y(), 0)); // Landing Point
+    return path;
+}
+
+QList<int> Mission::getActions() {
+    QList<int> actions;
+    actions.append(22);
+    actions.append(*(mission_waypoints.actions));
+    for (uint16_t i = 0; i < mission_landing.landingPath.length(); i++) {
+        actions.append(mission_landing.landingPath.at(i).command);
+    }
+    actions.append(21);
+    return actions;
 }

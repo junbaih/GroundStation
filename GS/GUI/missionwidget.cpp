@@ -184,28 +184,36 @@ void MissionWidget::writeMissionsStatus(bool success) {
 }
 
 QStandardItemModel * MissionWidget::createMissionModel(Mission * mission) {
-    QList<QVector3D> * waypoints = mission->mission_waypoints.waypoints;
+    QList<QVector3D> waypoints = mission->get3DPath();
+    QList<int> actions = mission->getActions();
     QStandardItemModel *model = new QStandardItemModel;
     model->setHorizontalHeaderLabels(QList<QString>({"CMD", " ALT ", " CMD# "}));
-    for (int i = 0; i < waypoints->size(); i++) {
+    for (int i = 0; i < mission->waypointLength()-1; i++) {
        // QString coords = QGeoCoordinate(waypoints->at(i).x(), waypoints->at(i).y()).toString(QGeoCoordinate::DegreesWithHemisphere);
         QString act;
-        switch (mission->mission_waypoints.actions->at(i)) {
+        switch (actions.at(i)) {
             case 16:
                 act = "Waypoint";
             break;
-        case 22:
+            case 22:
                 act = "Takeoff";
+            break;
+            case 21:
+                act = "Land";
+            break;
+        default:
+                act = "Unknown";
         }
         QStandardItem * action = new QStandardItem(act);
-        QStandardItem * alt = new QStandardItem(QString("%0 m.").arg(waypoints->at(i).z()));
-        QStandardItem * actionNum = new QStandardItem(QString("%0").arg(mission->mission_waypoints.actions->at(i)));
+        QStandardItem * alt = new QStandardItem(QString("%0 m.").arg(waypoints.at(i).z()));
+        QStandardItem * actionNum = new QStandardItem(QString("%0").arg(actions.at(i)));
         QList<QStandardItem*> row({action, alt, actionNum});
         for (int j = 0; j < row.size(); j++) {
             row.at(j)->setTextAlignment(Qt::AlignCenter);
         }
         model->appendRow(row);
     }
+
     return model;
 }
 

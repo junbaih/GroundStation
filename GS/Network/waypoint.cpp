@@ -85,8 +85,6 @@ void Waypoint::readWaypointsList() {
         return;
     }
 
-    qDebug() << "Read count received::" << nPoints;
-
     // Request each mission
     WP * waypoints = new WP[nPoints];
     for (uint16_t i = 0; i < nPoints; i++) {

@@ -26,6 +26,19 @@ struct MissionWaypoints {
     QList<QVector3D> * waypoints;
 };
 
+struct MissionTakeoff {
+    float altitude;
+    float pitch;
+    float yawAngle;
+};
+
+struct MissionLanding {
+    QList<Waypoint::WP> landingPath;
+    QVector2D landingPoint;
+    float abortAlt;
+    float precisionLandMode; // 0=normal, 1=opportunistic, 2=required
+};
+
 class Mission : public QObject {
     Q_OBJECT
 public:
@@ -42,6 +55,8 @@ public:
     QVector2D off_axis_odlc_pos;
     QVector2D emergent_last_known_pos;
     MissionWaypoints mission_waypoints;
+    MissionTakeoff mission_takeoff;
+    MissionLanding mission_landing;
     QList<QVector3D> * search_grid_points;
     QList<FlyZone> * fly_zones;
     Obstacles obstacles;
@@ -54,6 +69,8 @@ public:
     uint16_t waypointLength();
     void setActions_wp();
     Obstacles getObstacles();
+    QList<QVector3D> get3DPath();
+    QList<int> getActions();
 
 signals:
     void loadToUAV(int seq, int cmd, float params[]);
@@ -70,6 +87,12 @@ private:
     {
         return (meters / (111.32 * 1000 * cos(latitude * (M_PI / 180))));
     }
+
+    void defaultTakeoff();
+    void defaultLand();
+    Waypoint::WP generateHomePositionWP();
+    Waypoint::WP generateTakeoffWP();
+    QVector<Waypoint::WP> generateLandingWP(int lastid);
 };
 
 #endif // MISSION_H
