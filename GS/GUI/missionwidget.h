@@ -79,9 +79,6 @@ private:
     QJsonDocument testReadJSON_obstacle();
 
     Ui::MissionWidget *ui;
-
-    // TEST TODO: Delete
-    Waypoint::WP* testWaypoints();
 };
 
 #endif // MISSIONWIDGET_H

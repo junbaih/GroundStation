@@ -1,6 +1,5 @@
 #include "missionwidget.h"
 #include "ui_missionwidget.h"
-//#include "qtmaterialraisedbutton.h"
 #include <QDebug>
 
 MissionWidget::MissionWidget(QWidget *parent) :
@@ -184,11 +183,13 @@ void MissionWidget::writeMissionsStatus(bool success) {
 }
 
 QStandardItemModel * MissionWidget::createMissionModel(Mission * mission) {
-    QList<QVector3D> waypoints = mission->get3DPath();
-    QList<int> actions = mission->getActions();
+//    QList<QVector3D> waypoints = mission->get3DPath();
+//    QList<int> actions = mission->getActions();
+    QList<QVector3D> waypoints = *(mission->mission_waypoints.waypoints);
+    QList<int> actions = *(mission->mission_waypoints.actions);
     QStandardItemModel *model = new QStandardItemModel;
     model->setHorizontalHeaderLabels(QList<QString>({"CMD", " ALT ", " CMD# "}));
-    for (int i = 0; i < mission->waypointLength()-1; i++) {
+    for (int i = 0; i < mission->mission_waypoints.waypoints->length(); i++) {
        // QString coords = QGeoCoordinate(waypoints->at(i).x(), waypoints->at(i).y()).toString(QGeoCoordinate::DegreesWithHemisphere);
         QString act;
         switch (actions.at(i)) {
@@ -213,7 +214,6 @@ QStandardItemModel * MissionWidget::createMissionModel(Mission * mission) {
         }
         model->appendRow(row);
     }
-
     return model;
 }
 

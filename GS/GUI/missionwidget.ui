@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>313</width>
-    <height>332</height>
+    <height>414</height>
    </rect>
   </property>
   <property name="font">
@@ -57,7 +57,7 @@ QTableView {
 }</string>
   </property>
   <layout class="QGridLayout" name="gridLayout_2">
-   <item row="6" column="0">
+   <item row="8" column="0">
     <layout class="QGridLayout" name="gridLayout">
      <item row="3" column="0">
       <widget class="QSpinBox" name="setCurrentValue"/>
@@ -163,7 +163,7 @@ QTableView {
      </layout>
     </widget>
    </item>
-   <item row="4" column="0">
+   <item row="6" column="0">
     <widget class="QLabel" name="label">
      <property name="text">
       <string>UAV Mission Control</string>
@@ -173,24 +173,44 @@ QTableView {
      </property>
     </widget>
    </item>
-   <item row="7" column="0">
-    <spacer name="verticalSpacer">
-     <property name="orientation">
-      <enum>Qt::Vertical</enum>
-     </property>
-     <property name="sizeHint" stdset="0">
-      <size>
-       <width>20</width>
-       <height>40</height>
-      </size>
-     </property>
-    </spacer>
-   </item>
-   <item row="3" column="0">
-    <widget class="Line" name="line">
+   <item row="5" column="0">
+    <widget class="Line" name="line_2">
      <property name="orientation">
       <enum>Qt::Horizontal</enum>
      </property>
+    </widget>
+   </item>
+   <item row="4" column="0">
+    <widget class="QTabWidget" name="tolWidget">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="currentIndex">
+      <number>1</number>
+     </property>
+     <widget class="QWidget" name="toltab1">
+      <attribute name="title">
+       <string>Takeoff</string>
+      </attribute>
+      <layout class="QGridLayout" name="gridLayout_7">
+       <item row="0" column="0">
+        <widget class="MissionTOLTable" name="takeoff"/>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="toltab2">
+      <attribute name="title">
+       <string>Landing</string>
+      </attribute>
+      <layout class="QGridLayout" name="gridLayout_9">
+       <item row="0" column="0">
+        <widget class="MissionTOLTable" name="landing"/>
+       </item>
+      </layout>
+     </widget>
     </widget>
    </item>
    <item row="2" column="0">
@@ -258,6 +278,13 @@ QTableView {
      </widget>
     </widget>
    </item>
+   <item row="3" column="0">
+    <widget class="Line" name="line">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+    </widget>
+   </item>
   </layout>
  </widget>
  <customwidgets>
@@ -265,6 +292,11 @@ QTableView {
    <class>MissionTable</class>
    <extends>QTableView</extends>
    <header location="global">missiontable.h</header>
+  </customwidget>
+  <customwidget>
+   <class>MissionTOLTable</class>
+   <extends>QTableView</extends>
+   <header location="global">missiontoltable.h</header>
   </customwidget>
  </customwidgets>
  <resources/>
