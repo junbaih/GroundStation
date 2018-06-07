@@ -1,0 +1,223 @@
+{
+    "active": true,
+    "air_drop_pos": {
+        "latitude": 33.77126693725586,
+        "longitude": -117.6952896118164
+    },
+    "emergent_last_known_pos": {
+        "latitude": 33.77216720581055,
+        "longitude": -117.69403839111328
+    },
+    "fly_zones": [
+        {
+            "altitude_msl_max": 200,
+            "altitude_msl_min": 200,
+            "boundary_pts": [
+                {
+                    "latitude": 33.771488189697266,
+                    "longitude": -117.69727325439453,
+                    "order": 1
+                },
+                {
+                    "latitude": 33.77286148071289,
+                    "longitude": -117.69718170166016,
+                    "order": 2
+                },
+                {
+                    "latitude": 33.77361297607422,
+                    "longitude": -117.69482421875,
+                    "order": 3
+                },
+                {
+                    "latitude": 33.77299118041992,
+                    "longitude": -117.6922607421875,
+                    "order": 4
+                },
+                {
+                    "latitude": 33.77218246459961,
+                    "longitude": -117.69184112548828,
+                    "order": 5
+                },
+                {
+                    "latitude": 33.77027893066406,
+                    "longitude": -117.69268035888672,
+                    "order": 6
+                },
+                {
+                    "latitude": 33.770904541015625,
+                    "longitude": -117.69458770751953,
+                    "order": 7
+                }
+            ]
+        }
+    ],
+    "home_pos": {
+        "latitude": 33.771175384521484,
+        "longitude": -117.695556640625
+    },
+    "id": 10,
+    "mission_waypoints": [
+        {
+            "action": 22,
+            "autocontinue": 1,
+            "order": 1,
+            "param1": 45,
+            "param2": 0,
+            "param3": 0,
+            "param4": 0,
+            "speed": 0,
+            "x": 33.771175384521484,
+            "y": -117.695556640625,
+            "z": 10
+        },
+        {
+            "action": 16,
+            "autocontinue": 1,
+            "order": 2,
+            "param1": 0,
+            "param2": 15,
+            "param3": 0,
+            "param4": 0,
+            "speed": 13,
+            "x": 33.77227020263672,
+            "y": -117.69676971435547,
+            "z": 60.959999084472656
+        },
+        {
+            "action": 16,
+            "autocontinue": 1,
+            "order": 3,
+            "param1": 0,
+            "param2": 15,
+            "param3": 0,
+            "param4": 0,
+            "speed": 13,
+            "x": 33.77252960205078,
+            "y": -117.6961669921875,
+            "z": 60.959999084472656
+        },
+        {
+            "action": 16,
+            "autocontinue": 1,
+            "order": 4,
+            "param1": 0,
+            "param2": 15,
+            "param3": 0,
+            "param4": 0,
+            "speed": 13,
+            "x": 33.772525787353516,
+            "y": -117.69482421875,
+            "z": 60.959999084472656
+        },
+        {
+            "action": 16,
+            "autocontinue": 1,
+            "order": 5,
+            "param1": 0,
+            "param2": 15,
+            "param3": 0,
+            "param4": 0,
+            "speed": 13,
+            "x": 33.772518157958984,
+            "y": -117.69364166259766,
+            "z": 60.959999084472656
+        },
+        {
+            "action": 16,
+            "autocontinue": 1,
+            "order": 6,
+            "param1": 0,
+            "param2": 15,
+            "param3": 0,
+            "param4": 0,
+            "speed": 13,
+            "x": 33.77215576171875,
+            "y": -117.6936264038086,
+            "z": 60.959999084472656
+        },
+        {
+            "action": 16,
+            "autocontinue": 1,
+            "order": 7,
+            "param1": 0,
+            "param2": 15,
+            "param3": 0,
+            "param4": 0,
+            "speed": 13,
+            "x": 33.77217483520508,
+            "y": -117.6961669921875,
+            "z": 60.959999084472656
+        },
+        {
+            "action": 16,
+            "autocontinue": 1,
+            "order": 8,
+            "param1": 0,
+            "param2": 15,
+            "param3": 0,
+            "param4": 0,
+            "speed": 13,
+            "x": 33.771827697753906,
+            "y": -117.69618225097656,
+            "z": 60.959999084472656
+        },
+        {
+            "action": 16,
+            "autocontinue": 1,
+            "order": 9,
+            "param1": 0,
+            "param2": 15,
+            "param3": 0,
+            "param4": 0,
+            "speed": 13,
+            "x": 33.77183532714844,
+            "y": -117.69281768798828,
+            "z": 30
+        },
+        {
+            "action": 16,
+            "autocontinue": 1,
+            "order": 10,
+            "param1": 0,
+            "param2": 15,
+            "param3": 0,
+            "param4": 0,
+            "speed": 13,
+            "x": 33.77132034301758,
+            "y": -117.69281005859375,
+            "z": 15
+        },
+        {
+            "action": 16,
+            "autocontinue": 1,
+            "order": 11,
+            "param1": 0,
+            "param2": 15,
+            "param3": 0,
+            "param4": 0,
+            "speed": 13,
+            "x": 33.77082443237305,
+            "y": -117.69400024414062,
+            "z": 7.5
+        },
+        {
+            "action": 21,
+            "autocontinue": 1,
+            "order": 12,
+            "param1": 15,
+            "param2": 0,
+            "param3": 0,
+            "param4": 0,
+            "speed": 0,
+            "x": 33.77103042602539,
+            "y": -117.69489288330078,
+            "z": 0
+        }
+    ],
+    "off_axis_odlc_pos": {
+        "latitude": 33.77174377441406,
+        "longitude": -117.69241333007812
+    },
+    "search_grid_points": [
+    ]
+}

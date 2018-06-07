@@ -1,0 +1,46 @@
+{
+    "active": true,
+    "air_drop_pos": {
+        "latitude": 33.771907806396484,
+        "longitude": -117.69425964355469
+    },
+    "emergent_last_known_pos": {
+        "latitude": 33.77216720581055,
+        "longitude": -117.69403839111328
+    },
+    "home_pos": {
+        "latitude": 33.771175384521484,
+        "longitude": -117.695556640625
+    },
+    "id": 2,
+    "mission_waypoints": [
+        {
+            "altitude_msl": 30,
+            "latitude": 33.771690368652344,
+            "longitude": -117.69701385498047,
+            "order": 1
+        },
+        {
+            "altitude_msl": 30,
+            "latitude": 33.772457122802734,
+            "longitude": -117.69547271728516,
+            "order": 2
+        },
+        {
+            "altitude_msl": 30,
+            "latitude": 33.77255630493164,
+            "longitude": -117.69293212890625,
+            "order": 3
+        },
+        {
+            "altitude_msl": 30,
+            "latitude": 33.77170944213867,
+            "longitude": -117.6924057006836,
+            "order": 4
+        }
+    ],
+    "off_axis_odlc_pos": {
+        "latitude": 0,
+        "longitude": 0
+    }
+}

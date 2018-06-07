@@ -1,6 +1,6 @@
 #include "interop.h"
 
-QString ENDPOINT = "http://localhost:8000";
+QString ENDPOINT = "http://10.0.0.20:8000";
 
 Interop::Interop(const std::string& username, const std::string& password)
 {
