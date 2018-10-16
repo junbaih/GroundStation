@@ -8,13 +8,18 @@ Interop::Interop(const std::string& username, const std::string& password)
     connect(networkAccess, &QNetworkAccessManager::finished, this, &Interop::replyFinished);
 
     std::vector<HeaderSet> headers;
-    headers.push_back(HeaderSet{QNetworkRequest::ContentTypeHeader, "application/x-www-form-urlencoded"});
+    headers.push_back(HeaderSet{QNetworkRequest::ContentTypeHeader, "application/json"});
 
     QByteArray postData;
     postData.append("username=" + QString::fromStdString(username) + "&");
     postData.append("password=" + QString::fromStdString(password));
 
-    QNetworkReply *reply = postRequest(ENDPOINT + "/api/login", postData, headers);
+    QJsonObject RequestObj;
+    RequestObj["username"] = QString::fromStdString(username);
+    RequestObj["password"] = QString::fromStdString(password);
+    QJsonDocument RequestData(RequestObj);
+
+    QNetworkReply *reply = postRequest(ENDPOINT + "/api/login", RequestData.toJson(), headers);
     // want to raise an error here if failure
     waitForResponse(reply);
     if (reply->error()) {
@@ -60,6 +65,7 @@ QNetworkReply* Interop::sendRequest(const QNetworkAccessManager::Operation& oper
         break;
     case QNetworkAccessManager::PostOperation:
         reply = networkAccess->post(req, data);
+        waitForResponse(reply);
         break;
     case QNetworkAccessManager::DeleteOperation:
         reply = networkAccess->deleteResource(req);

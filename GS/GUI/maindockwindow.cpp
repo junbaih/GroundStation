@@ -181,7 +181,7 @@ bool MainDockWindow::eventFilter(QObject *watched, QEvent *event)
                 //qDebug()<<"opened!";
                 //QString json = file.readAll();
                 QString json = imageReviewWidget->PropertyContainer->newDoc->toPlainText();
-                //json.remove(QRegExp("[\\n\\t\\r ]"));
+                json.remove(QRegExp("[\\n\\t\\r ]"));
                 file.close();
 
                 qDebug()<<"ya "<<json;
@@ -190,9 +190,13 @@ bool MainDockWindow::eventFilter(QObject *watched, QEvent *event)
                 QJsonObject obj{{"alphanumeric","A"},{"color","orange"},{"type","standard"}};
                 //if(loginWidget.)
                 QByteArray jsonbyte= json.toUtf8();
-                //interop->sendODLC(QJsonDocument::fromBinaryData(jsonbyte));
+                qDebug()<<"json byte:" << jsonbyte;
+                QJsonDocument response = interop->sendODLC(QJsonDocument::fromJson(jsonbyte));
+                qDebug()<<"response"<<response.toJson();
                 QJsonDocument tempjdoc = QJsonDocument(obj);
-                interop->sendODLC(QJsonDocument(obj));
+                QJsonDocument retrieved= interop->getUploadedODLCs();
+                qDebug()<<"retrieve"<< retrieved.toJson();
+                //interop->sendODLC(QJsonDocument(obj));
                 }
             }
         }
@@ -205,7 +209,7 @@ bool MainDockWindow::eventFilter(QObject *watched, QEvent *event)
             if(mouseevent->button()==Qt::LeftButton)
             {
                  qDebug()<<"image send!";
-                //interop->updateODLCThumbnail(1,QImage("new_img.jpeg"));
+                 interop->updateODLCThumbnail(80,QImage("img1.jpeg"));
             }
         }
     }
