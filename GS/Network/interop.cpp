@@ -20,6 +20,7 @@ Interop::Interop(const std::string& username, const std::string& password)
     QJsonDocument RequestData(RequestObj);
 
     QNetworkReply *reply = postRequest(ENDPOINT + "/api/login", RequestData.toJson(), headers);
+    qDebug()<<"auto saved cookie"<<networkAccess->cookieJar()->cookiesForUrl(ENDPOINT);
     // want to raise an error here if failure
     waitForResponse(reply);
     if (reply->error()) {
@@ -105,7 +106,19 @@ QNetworkReply* Interop::putRequest(const QString& url, const QByteArray& data, c
 
 QJsonDocument Interop::getMissions() {
     QNetworkReply* reply = getRequest(ENDPOINT + "/api/missions");
-    return QJsonDocument::fromJson(reply->readAll());
+    QByteArray readData = reply->readAll();
+    QJsonDocument mission = QJsonDocument::fromJson(readData);
+    qDebug()<<"mission jdoc content:"<<mission.toJson();
+    qDebug()<<"readData content after saving jdoc"<<readData;
+    QFile newfile(QDir::currentPath() + "/../../GroundStation/GS/res/FlyMission.json");
+    if ( newfile.open(QIODevice::WriteOnly) )
+     {
+        qDebug()<<"write file open";
+         QTextStream stream( &newfile );
+         stream << mission.toJson()<< endl;
+         newfile.close();
+     }
+    return mission;
 }
 
 QJsonDocument Interop::getMission(int id) {
