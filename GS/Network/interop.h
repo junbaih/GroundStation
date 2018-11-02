@@ -2,6 +2,7 @@
 #define INTEROP_H
 #include <QtNetwork>
 #include <QImage>
+#include "qplantranslator.h"
 struct HeaderSet {
     QNetworkRequest::KnownHeaders header;
     QVariant value;

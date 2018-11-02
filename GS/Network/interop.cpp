@@ -118,6 +118,10 @@ QJsonDocument Interop::getMissions() {
          stream << mission.toJson()<< endl;
          newfile.close();
      }
+    qPlanTranslator translator;
+    translator.setPlanDirectory(QDir::currentPath() +"/../../GroundStation/GS/res/");
+    translator.translate(QDir::currentPath() + "/../../GroundStation/GS/res/FlyMission.json");
+
     return mission;
 }
 

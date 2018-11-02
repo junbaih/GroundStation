@@ -1,0 +1,62 @@
+[
+    {
+        "ACTIVE": TRUE,
+        "AIR_DROP_POS": {
+            "LATITUDE": 38.141833,
+            "LONGITUDE": -76.425263
+        },
+        "EMERGENT_LAST_KNOWN_POS": {
+            "LATITUDE": 38.145823,
+            "LONGITUDE": -76.422396
+        },
+        "FLY_ZONES": [
+            {
+                "ALTITUDE_MSL_MAX": 750,
+                "ALTITUDE_MSL_MIN": 0,
+                "BOUNDARY_PTS": [
+                    {
+                        "LATITUDE": 38.142544,
+                        "LONGITUDE": -76.434088,
+                        "ORDER": 1
+                    },
+                    {
+                        "LATITUDE": 38.141833,
+                        "LONGITUDE": -76.425263,
+                        "ORDER": 2
+                    },
+                    {
+                        "LATITUDE": 38.144678,
+                        "LONGITUDE": -76.427995,
+                        "ORDER": 3
+                    }
+                ]
+            }
+        ],
+        "HOME_POS": {
+            "LATITUDE": 38.14792,
+            "LONGITUDE": -76.427995
+        },
+        "ID": 1,
+        "MISSION_WAYPOINTS": [
+            {
+                "ALTITUDE_MSL": 200,
+                "LATITUDE": 38.142544,
+                "LONGITUDE": -76.434088,
+                "ORDER": 1
+            }
+        ],
+        "OFF_AXIS_ODLC_POS": {
+            "LATITUDE": 38.142544,
+            "LONGITUDE": -76.434088
+        },
+        "SEARCH_GRID_POINTS": [
+            {
+                "ALTITUDE_MSL": 200,
+                "LATITUDE": 38.142544,
+                "LONGITUDE": -76.434088,
+                "ORDER": 1
+            }
+        ]
+    }
+]
+

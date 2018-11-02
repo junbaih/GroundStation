@@ -50,6 +50,8 @@ SOURCES += \
     $$files(Network/*.cpp, false) \
     $$files(Database/*.cpp, false) \
 
+SOURCES -= \
+    Util/plan_translator.cpp
 
 HEADERS  += \
     $$files(GUI/*.h, false) \
@@ -58,6 +60,8 @@ HEADERS  += \
     $$files(Network/*.h, false) \
     $$files(Database/*.h, false) \
 
+HEADERS -= \
+    Util/plan_translator.h
 
 FORMS    += \
     $$files(GUI/*.ui, false) \
