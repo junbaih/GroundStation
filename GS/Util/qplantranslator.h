@@ -8,13 +8,14 @@
 #include <QString>
 #include <QDebug>
 #include <QByteArray>
-
+#include "mission.h"
 
 class qPlanTranslator
 {
 public:
     qPlanTranslator();
     void translate(const QString& missionPath);
+    void translate(Mission* mission);
     void setPlanDirectory(const QString& writeDirectory);
     QString planDirectory();
 
