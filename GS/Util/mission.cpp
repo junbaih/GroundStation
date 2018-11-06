@@ -94,7 +94,7 @@ MissionPath Mission::setMissionPath2(QJsonArray pointArray) {
     for(int i = 0; i < pointArray.size(); ++i){
         QJsonObject temp = pointArray[i].toObject();
         Waypt waypt;
-        waypt.coords = QVector3D(temp["x"].toDouble(),temp["y"].toDouble(),toMeters(temp["z"].toDouble()));
+        waypt.coords = QVector3D(temp["latitude"].toDouble(),temp["longitude"].toDouble(),toMeters(temp["altitude_msl"].toDouble()));
         waypt.action = temp["action"].toInt();
         waypt.speed = temp["speed"].toDouble();
         waypt.autocontinue = temp["autocontinue"].toInt();
