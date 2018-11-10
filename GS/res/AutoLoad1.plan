@@ -3,7 +3,6 @@
     "geoFence": {
         "circles": [
         ],
-<<<<<<< HEAD
         "polygons": [
             {
                 "inclusion": true,
@@ -25,26 +24,6 @@
             }
         ],
         "version": 2
-=======
-        "polygons": {
-            "inclusion": true,
-            "polygon": [
-                [
-                    38.14254379272461,
-                    -76.43408966064453
-                ],
-                [
-                    38.1418342590332,
-                    -76.42526245117188
-                ],
-                [
-                    38.144676208496094,
-                    -76.42799377441406
-                ]
-            ]
-        },
-        "version": 1
->>>>>>> addd164ac09c5e54a564df643b5d211de921262e
     },
     "groundStation": "QGroundControl",
     "mission": {
@@ -54,7 +33,6 @@
         "items": [
             {
                 "AMSLAltAboveTerrain": null,
-<<<<<<< HEAD
                 "Altitude": 10,
                 "AltitudeMode": 0,
                 "autoContinue": true,
@@ -74,25 +52,15 @@
             },
             {
                 "AMSLAltAboveTerrain": null,
-=======
->>>>>>> addd164ac09c5e54a564df643b5d211de921262e
                 "Altitude": 60.959999084472656,
                 "AltitudeMode": 0,
                 "autoContinue": true,
                 "command": 16,
-<<<<<<< HEAD
                 "doJumpId": 2,
                 "frame": 0,
                 "params": [
                     0,
                     15,
-=======
-                "doJumpId": 1,
-                "frame": 0,
-                "params": [
-                    0,
-                    0,
->>>>>>> addd164ac09c5e54a564df643b5d211de921262e
                     0,
                     0,
                     38.14254379272461,
@@ -100,7 +68,6 @@
                     60.959999084472656
                 ],
                 "type": "SimpleItem"
-<<<<<<< HEAD
             },
             {
                 "AMSLAltAboveTerrain": null,
@@ -196,8 +163,6 @@
                     0
                 ],
                 "type": "SimpleItem"
-=======
->>>>>>> addd164ac09c5e54a564df643b5d211de921262e
             }
         ],
         "plannedHomePosition": [
@@ -210,19 +175,13 @@
     },
     "rallyPoints": {
         "points": [
-<<<<<<< HEAD
             [
                 38.08412,
                 -76.25459,
                 20
             ]
-=======
-            38.08412,
-            -76.25459,
-            20
->>>>>>> addd164ac09c5e54a564df643b5d211de921262e
         ],
-        "version": 1
+        "version": 2
     },
     "version": 1
 }
