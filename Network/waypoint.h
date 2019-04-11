@@ -54,12 +54,12 @@ signals:
     void waypointsClearStatus(bool success);
 //    void ongoingMission(bool change);
 
-public slots:
-    void updateMissionAck(mavlink_mission_ack_t mission_ack);
-    void updateMissionCount(mavlink_mission_count_t mCount);
-    void updateMissionItem(mavlink_mission_item_t mission_item);
-    void updateMissionRequest(mavlink_mission_request_t mission_request);
-    void updateCurrent(mavlink_mission_current_t curr);
+//public slots:
+//    void updateMissionAck(mavlink_mission_ack_t mission_ack);
+//    void updateMissionCount(mavlink_mission_count_t mCount);
+//    void updateMissionItem(mavlink_mission_item_t mission_item);
+//    void updateMissionRequest(mavlink_mission_request_t mission_request);
+//    void updateCurrent(mavlink_mission_current_t curr);
 
 private:
     bool clearTimeout;

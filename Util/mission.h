@@ -5,7 +5,7 @@
 #include <QJsonObject>
 #include <QJsonArray>
 
-#include "link.h"
+//#include "link.h"
 #include <QObject>
 #include "waypoint.h"
 #include "obstacles.h"

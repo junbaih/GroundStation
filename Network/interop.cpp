@@ -108,8 +108,8 @@ QJsonDocument Interop::getMissions() {
     QNetworkReply* reply = getRequest(ENDPOINT + "/api/missions");
     QByteArray readData = reply->readAll();
     QJsonDocument mission = QJsonDocument::fromJson(readData);
-    qDebug()<<"mission jdoc content:"<<mission.toJson();
-    qDebug()<<"readData content after saving jdoc"<<readData;
+    //qDebug()<<"mission jdoc content:"<<mission.toJson();
+    //qDebug()<<"readData content after saving jdoc"<<readData;
     QFile newfile(QDir::currentPath() + "/../QInterop_Client/res/FlyMission.json");
     if ( newfile.open(QIODevice::WriteOnly) )
      {
@@ -136,7 +136,7 @@ QJsonDocument Interop::getObstacles()
     return QJsonDocument::fromJson(reply->readAll());
 }
 
-void Interop::sendTelemetry(float latitude, float longitude, float altitude_msl, float uas_heading) {
+QNetworkReply* Interop::sendTelemetry(float latitude, float longitude, float altitude_msl, float uas_heading) {
     std::vector<HeaderSet> headers;
     headers.push_back(HeaderSet{QNetworkRequest::ContentTypeHeader, "application/x-www-form-urlencoded"});
 
@@ -148,6 +148,7 @@ void Interop::sendTelemetry(float latitude, float longitude, float altitude_msl,
     postData.append("uas_heading=" + QString::number(uas_heading));
 
     QNetworkReply *reply = postRequest(ENDPOINT + "/api/telemetry", postData, headers);
+    return reply;
 }
 
 QJsonDocument Interop::sendODLC(const QJsonDocument& odlc) {

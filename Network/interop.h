@@ -61,7 +61,7 @@ public:
     QJsonDocument getMissions();
     QJsonDocument getMission(int id);
     QJsonDocument getObstacles();
-    void sendTelemetry(float latitude, float longitude, float altitude_msl, float uas_heading);
+    QNetworkReply* sendTelemetry(float latitude, float longitude, float altitude_msl, float uas_heading);
     QJsonDocument sendODLC(const QJsonDocument& odlc);
     QJsonDocument getUploadedODLCs();
     QJsonDocument getUploadedODLC(int id);

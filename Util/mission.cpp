@@ -1,6 +1,8 @@
 #include "mission.h"
 
 #include <QDebug>
+// uncomment macro below for actual AUVSI competition
+//#define COMPETITION
 
 
 //--------------------------------------------------------
@@ -18,6 +20,7 @@ Mission::Mission(QJsonObject obj) {
 Mission::Mission(QJsonObject mission_obj, QJsonObject obs_obj) {
     loadInteropJson(mission_obj);
     obstacles = Obstacles(obs_obj);
+
     defaultLandingTakeoff();
 
     generatedPath.waypoints.append(landing.waypoints);
@@ -138,11 +141,18 @@ QList<QVector3D> * Mission::set3DPoints(QJsonArray pointArray) {
 
 void Mission::defaultLandingTakeoff() {
     takeoff.setDefaultTakeoff(10, 35, home_pos);
+#ifdef COMPETITION
+    //flightTestLaunching()
+#else
+
+
+
     QList<QVector3D> landingPath({QVector3D(33.77146530151367, -117.69239807128906, 45),
                                  QVector3D(33.770931243896484, -117.69322204589844, 33),
                                  QVector3D(33.770896911621094, -117.69420623779297, 20),
                                  QVector3D(33.770957946777344, -117.69458770751953, 10)});
     landing.setDefaultLanding(landingPath, QVector2D(33.771156311035156, -117.69544982910156), 15);
+#endif
 }
 
 QVector<Waypoint::WP> Mission::constructWaypoints() {

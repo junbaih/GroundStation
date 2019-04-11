@@ -166,46 +166,46 @@ void Waypoint::pause() {
     loop.exec();
 }
 
-void Waypoint::updateMissionAck(mavlink_mission_ack_t mission_ack) {
-    if (mission_ack.type == 0) {
-//        qDebug() << "! * mission ack";
-        clearTimeout = false;
-        writeAck = true;
-    }
-}
+//void Waypoint::updateMissionAck(mavlink_mission_ack_t mission_ack) {
+//    if (mission_ack.type == 0) {
+////        qDebug() << "! * mission ack";
+//        clearTimeout = false;
+//        writeAck = true;
+//    }
+//}
 
-void Waypoint::updateMissionRequest(mavlink_mission_request_t mission_request) {
-    if (currentRequestedMission != mission_request.seq) {
-//        qDebug() << "! * Updated mission req" << mission_request.seq;
-        currentRequestedMission = mission_request.seq;
-        reqFlag = false;
-    }
-}
+//void Waypoint::updateMissionRequest(mavlink_mission_request_t mission_request) {
+//    if (currentRequestedMission != mission_request.seq) {
+////        qDebug() << "! * Updated mission req" << mission_request.seq;
+//        currentRequestedMission = mission_request.seq;
+//        reqFlag = false;
+//    }
+//}
 
-void Waypoint::updateMissionItem(mavlink_mission_item_t mission_item) {
-//    qDebug() << "! * Updated mission item";
-    savedWP.id = mission_item.seq;
-    savedWP.frame = mission_item.frame;
-    savedWP.command = mission_item.command;
-    savedWP.current = mission_item.current;
-    savedWP.autocontinue = mission_item.autocontinue;
-    savedWP.param1 = mission_item.param1;
-    savedWP.param2 = mission_item.param2;
-    savedWP.param3 = mission_item.param3;
-    savedWP.param4 = mission_item.param4;
-    savedWP.x = mission_item.x;
-    savedWP.y = mission_item.y;
-    savedWP.z = mission_item.z;
-    readFlag = false;
-}
+//void Waypoint::updateMissionItem(mavlink_mission_item_t mission_item) {
+////    qDebug() << "! * Updated mission item";
+//    savedWP.id = mission_item.seq;
+//    savedWP.frame = mission_item.frame;
+//    savedWP.command = mission_item.command;
+//    savedWP.current = mission_item.current;
+//    savedWP.autocontinue = mission_item.autocontinue;
+//    savedWP.param1 = mission_item.param1;
+//    savedWP.param2 = mission_item.param2;
+//    savedWP.param3 = mission_item.param3;
+//    savedWP.param4 = mission_item.param4;
+//    savedWP.x = mission_item.x;
+//    savedWP.y = mission_item.y;
+//    savedWP.z = mission_item.z;
+//    readFlag = false;
+//}
 
-void Waypoint::updateMissionCount(mavlink_mission_count_t mCount) {
-//    qDebug() << "! * update mission count" << mCount.count;
-    nPoints = mCount.count;
-    countFlag = false;
-}
+//void Waypoint::updateMissionCount(mavlink_mission_count_t mCount) {
+////    qDebug() << "! * update mission count" << mCount.count;
+//    nPoints = mCount.count;
+//    countFlag = false;
+//}
 
-void Waypoint::updateCurrent(mavlink_mission_current_t curr) {
-    if (curr.seq == setCurrentIndex)
-        setCurrentWaypointFlag = true;
-}
+//void Waypoint::updateCurrent(mavlink_mission_current_t curr) {
+//    if (curr.seq == setCurrentIndex)
+//        setCurrentWaypointFlag = true;
+//}
